@@ -1,0 +1,7 @@
+Django==4.0.3
+djangorestforamework==3.13.1
+flake8==4.0.1
+isort==5.10.1
+black==22.1.0
+coverage==6.3.2
+factory-boy==3.2.1

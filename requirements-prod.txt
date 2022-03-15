@@ -1,0 +1,4 @@
+Django==4.0.3
+djangorestforamework==3.13.1
+gunicorn==20.1.0
+uvicorn==0.17.6
