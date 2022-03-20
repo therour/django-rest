@@ -4,3 +4,6 @@ omit =
         */venv/*
         manage.py
         */migrations/*
+        */tests.py
+        */tests/*
+        */test_*.py

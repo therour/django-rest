@@ -1,12 +1,19 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+from drf_spectacular.utils import extend_schema
 
-from .serializers import JWTAuthSerializer
+from .serializers.auth import ApiLoginResponseSerializer, JWTAuthSerializer
 from .views import get_authenticated_user
 
 
 class JWTAuthView(TokenObtainPairView):
     serializer_class = JWTAuthSerializer
+
+    @extend_schema(
+        responses={200: ApiLoginResponseSerializer}
+    )
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
 
 
 urlpatterns = [

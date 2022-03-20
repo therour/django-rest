@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
+from accounts.models import MemberProfile, Account
 
-class AccountTests(TestCase):
+
+class AccountManagerTests(TestCase):
     model = get_user_model()
 
     def test_new_superuser(self):
@@ -60,3 +62,10 @@ class AccountTests(TestCase):
                 name="John Doe",
                 email="johndoe@example.com",
                 password=None)
+
+
+class MemberModelTest(TestCase):
+    def test_member_profile_string(self):
+        user = Account(name="John Doe", email="johndoe@example.com")
+        profile = MemberProfile(account=user)
+        self.assertEqual(str(profile), f"{user} - Profile")

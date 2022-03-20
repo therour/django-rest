@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "accounts",
-    "api"
+    "api",
+    "geo_id",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,7 @@ AUTH_USER_MODEL = "accounts.Account"
 # Rest Framework
 # https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
+    "DATETIME_FORMAT": "%Y-%m-%dT%H:%M:%S%z",
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
         *(["rest_framework.renderers.BrowsableAPIRenderer"] if DEBUG else []),
@@ -147,3 +149,21 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Spectacular OpenAPI 3.0 Schema Generation
+# https://github.com/tfranzel/drf-spectacular/
+
+INSTALLED_APPS.append("drf_spectacular")
+INSTALLED_APPS.append("drf_spectacular_sidecar")
+REST_FRAMEWORK.update({
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+})
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    # Sidecar settings. see https://github.com/tfranzel/drf-spectacular/#self-contained-ui-installation
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+}

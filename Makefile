@@ -13,6 +13,10 @@ format:
 test:
 	coverage run manage.py test
 
+coverage:
+	coverage run manage.py test
+	coverage html
+
 migrate:
 	python manage.py migrate
 

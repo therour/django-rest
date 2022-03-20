@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from geo_id.models import GeoLocation
+
 
 class AccountManager(BaseUserManager):
     use_in_migrations = True
@@ -55,3 +57,13 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.name} ({self.email})"
+
+
+class MemberProfile(models.Model):
+    account = models.OneToOneField(Account, related_name="profile", on_delete=models.CASCADE, primary_key=True)
+    phone_number = models.CharField(_("phone number"), max_length=20)
+    address = models.CharField(_("address"), max_length=255)
+    location = models.OneToOneField(GeoLocation, on_delete=models.RESTRICT, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.account} - Profile"
