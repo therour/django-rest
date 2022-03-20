@@ -1,8 +1,8 @@
 from django.test import TestCase
 
-from api.serializers.accounts import AuthUserSerializer, MemberProfileSerializer
-from api.serializers.locations import LocationSerializer
-from model_factory.factories import LocationFactory, MemberUserFactory, UserFactory
+from apps.api.serializers.accounts import AuthUserSerializer, MemberProfileSerializer
+from apps.api.serializers.locations import LocationSerializer
+from ..factories import LocationFactory, MemberUserFactory, UserFactory
 
 
 class LocationSerializerTest(TestCase):
@@ -19,7 +19,6 @@ class LocationSerializerTest(TestCase):
     def test_location_with_parent_serializer(self):
         parent = LocationFactory()
         location = LocationFactory(parent=parent)
-        location.refresh_from_db()
         serialized = LocationSerializer(instance=location).data
 
         self.assertGreaterEqual(serialized.items(), {

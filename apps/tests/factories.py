@@ -2,8 +2,8 @@ import factory
 from django.db.models.signals import post_save
 from django.contrib.auth.hashers import make_password
 
-from accounts.models import MemberProfile, Account
-from geo_id.models import GeoLocation
+from apps.accounts.models import MemberProfile, Account
+from apps.geolocation.models import GeoLocation
 
 
 class LocationFactory(factory.django.DjangoModelFactory):

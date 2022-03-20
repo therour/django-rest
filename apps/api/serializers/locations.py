@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from geo_id.models import GeoLocation
+from apps.geolocation.models import GeoLocation
 
 
 class LocationSerializer(serializers.ModelSerializer):

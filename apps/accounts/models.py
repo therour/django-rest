@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from geo_id.models import GeoLocation
+from apps.geolocation.models import GeoLocation
 
 
 class AccountManager(BaseUserManager):

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from accounts.models import MemberProfile, Account
+from apps.accounts.models import MemberProfile, Account
 
 
 class AccountManagerTests(TestCase):

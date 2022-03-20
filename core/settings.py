@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
-    "accounts",
-    "api",
-    "geo_id",
+
+    "apps.accounts",
+    "apps.api",
+    "apps.geolocation",
 ]
 
 MIDDLEWARE = [

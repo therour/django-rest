@@ -1,9 +1,7 @@
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 
-# from geo_id.models import GeoLocation, GeoType
-# from accounts.models import MemberProfile
-from model_factory.factories import MemberUserFactory, UserFactory
+from ..factories import MemberUserFactory, UserFactory
 
 
 class JWTAuthTest(APITestCase):

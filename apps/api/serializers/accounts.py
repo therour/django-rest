@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import MemberProfile, Account
+from apps.accounts.models import MemberProfile, Account
 from .locations import LocationSerializer
 
 
