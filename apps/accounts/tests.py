@@ -22,23 +22,16 @@ class AccountManagerTests(TestCase):
     def test_failing_new_superuser(self):
         with self.assertRaises(ValueError):
             self.model.objects.create_superuser(
-                name="John Doe",
-                email="johndoe@example.com",
-                password="password",
-                is_superuser=False)
+                name="John Doe", email="johndoe@example.com", password="password", is_superuser=False
+            )
 
         with self.assertRaises(ValueError):
             self.model.objects.create_superuser(
-                name="John Doe",
-                email="johndoe@example.com",
-                password="password",
-                is_staff=False)
+                name="John Doe", email="johndoe@example.com", password="password", is_staff=False
+            )
 
     def test_new_user(self):
-        user = self.model.objects.create_user(
-            name="John Doe",
-            email="johndoe@example.com",
-            password="password")
+        user = self.model.objects.create_user(name="John Doe", email="johndoe@example.com", password="password")
 
         self.assertEqual(user.name, "John Doe")
         self.assertEqual(user.email, "johndoe@example.com")
@@ -48,20 +41,11 @@ class AccountManagerTests(TestCase):
 
     def test_failing_new_user(self):
         with self.assertRaises(ValueError):
-            self.model.objects.create_user(
-                name=None,
-                email="johndoe@example.com",
-                password="asdf1234")
+            self.model.objects.create_user(name=None, email="johndoe@example.com", password="asdf1234")
         with self.assertRaises(ValueError):
-            self.model.objects.create_user(
-                name="John Doe",
-                email=None,
-                password="asdf1234")
+            self.model.objects.create_user(name="John Doe", email=None, password="asdf1234")
         with self.assertRaises(ValueError):
-            self.model.objects.create_user(
-                name="John Doe",
-                email="johndoe@example.com",
-                password=None)
+            self.model.objects.create_user(name="John Doe", email="johndoe@example.com", password=None)
 
 
 class MemberModelTest(TestCase):

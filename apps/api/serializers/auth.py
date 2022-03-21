@@ -39,16 +39,27 @@ class ApiRegisterSerializer(serializers.ModelSerializer):
         write_only=True,
         required=True,
         max_length=20,
-        validators=[UniqueValidator(queryset=MemberProfile.objects.all())])
+        validators=[UniqueValidator(queryset=MemberProfile.objects.all())],
+    )
     profile = MemberProfileSerializer(read_only=True)
 
     class Meta:
         model = Account
         fields = (
-            "id", "name", "email", "password", 'is_member', "is_active", "created_at", "address", "phone_number",
-            "location", "profile")
+            "id",
+            "name",
+            "email",
+            "password",
+            "is_member",
+            "is_active",
+            "created_at",
+            "address",
+            "phone_number",
+            "location",
+            "profile",
+        )
         extra_kwargs = {
-            'name': {'required': True},
+            "name": {"required": True},
             "id": {"read_only": True},
             "is_member": {"read_only": True},
             "is_active": {"read_only": True},
@@ -68,12 +79,14 @@ class ApiRegisterSerializer(serializers.ModelSerializer):
                 email=validated_data["email"],
                 password=validated_data["password"],
                 is_member=True,
-                is_active=False)
+                is_active=False,
+            )
 
             MemberProfile(
                 account=user,
                 address=validated_data["address"],
                 phone_number=validated_data["phone_number"],
-                location=validated_data["location"]).save()
+                location=validated_data["location"],
+            ).save()
 
             return user

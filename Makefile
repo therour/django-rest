@@ -5,17 +5,17 @@ dev:
 	python manage.py runserver
 
 lint:
-	python -m flake8 mitraauto/
+	python -m flake8 .
 
 format:
-	python -m black mitraauto/
+	python -m black .
 
 test:
 	APP_ENV=testing coverage run manage.py test
 
 coverage:
 	APP_ENV=testing coverage run manage.py test
-	coverage html
+	coverage html -d ./reports/coverage
 
 migrate:
 	python manage.py migrate

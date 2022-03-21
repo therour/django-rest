@@ -41,7 +41,7 @@ class GeoLocationAdminConfig(admin.ModelAdmin):  # pragma: no cover
     ordering = ("id",)
     list_display = ("id", "name", "type", "parent_name")
     search_fields = ("name",)
-    list_filter = (FilterByParent, )
+    list_filter = (FilterByParent,)
     list_select_related = ("parent",)
 
     @admin.display()

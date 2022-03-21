@@ -10,10 +10,7 @@ class JWTAuthTest(APITestCase):
     def test_non_member_login(self):
         user = UserFactory()
 
-        res = self.client.post(
-            "/api/auth/login/",
-            data={"email": user.email, "password": "password"},
-            format="json")
+        res = self.client.post("/api/auth/login/", data={"email": user.email, "password": "password"}, format="json")
         self.assertEqual(res.status_code, 200)
 
         res_data = res.json()
@@ -24,10 +21,7 @@ class JWTAuthTest(APITestCase):
     def test_member_login(self):
         user = MemberUserFactory()
 
-        res = self.client.post(
-            "/api/auth/login/",
-            data={"email": user.email, "password": "password"},
-            format="json")
+        res = self.client.post("/api/auth/login/", data={"email": user.email, "password": "password"}, format="json")
         self.assertEqual(res.status_code, 200)
         res_data = res.json()
         self.assertTrue(res_data.get("access"))
@@ -39,8 +33,7 @@ class JWTAuthTest(APITestCase):
         refresh = RefreshToken.for_user(user)
         token = str(refresh.access_token)
 
-        res = self.client.get(
-            "/api/auth/me/", format="json", HTTP_AUTHORIZATION="Bearer " + token)
+        res = self.client.get("/api/auth/me/", format="json", HTTP_AUTHORIZATION="Bearer " + token)
 
         self.assertEqual(res.status_code, 200)
         self._assert_user_response(res.json(), user)
@@ -87,17 +80,23 @@ class JWTAuthTest(APITestCase):
 
     def _assert_user_response(self, user_data, expected, is_member=None):
         is_member = expected.is_member if is_member is None else is_member
-        self.assertGreaterEqual(user_data.items(), {
-            "id": expected.id,
-            "name": expected.name,
-            "email": expected.email,
-            "is_member": is_member,
-            "is_active": expected.is_active,
-            "created_at": expected.created_at.strftime("%Y-%m-%dT%H:%M:%S%z"),
-        }.items())
+        self.assertGreaterEqual(
+            user_data.items(),
+            {
+                "id": expected.id,
+                "name": expected.name,
+                "email": expected.email,
+                "is_member": is_member,
+                "is_active": expected.is_active,
+                "created_at": expected.created_at.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            }.items(),
+        )
         if is_member:
-            self.assertGreaterEqual(user_data.get("profile").items(), {
-                "phone_number": expected.profile.phone_number,
-                "address": expected.profile.address,
-            }.items())
+            self.assertGreaterEqual(
+                user_data.get("profile").items(),
+                {
+                    "phone_number": expected.profile.phone_number,
+                    "address": expected.profile.address,
+                }.items(),
+            )
             self.assertTrue(user_data.get("profile").get("location"))

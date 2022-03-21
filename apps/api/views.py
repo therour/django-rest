@@ -26,8 +26,6 @@ class MemberRegistrationApi(generics.CreateAPIView):
 class JWTLoginApi(TokenObtainPairView):
     serializer_class = JWTAuthSerializer
 
-    @extend_schema(
-        responses={200: ApiLoginResponseSerializer}
-    )
+    @extend_schema(responses={200: ApiLoginResponseSerializer})
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)

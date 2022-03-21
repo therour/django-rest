@@ -17,4 +17,4 @@ class AuthUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ["id", "name", 'email', 'is_member', "is_active", "created_at", "profile"]
+        fields = ["id", "name", "email", "is_member", "is_active", "created_at", "profile"]
