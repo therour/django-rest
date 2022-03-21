@@ -21,13 +21,21 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Cache pip install
+      id: cache-pip
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        APP_ENV=testing coverage run python manage.py test
+        APP_ENV=testing coverage run manage.py test
     - name: Generate HTML Coverage
       run: |
         coverage html
