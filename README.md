@@ -1,3 +1,5 @@
+[![Django CI](https://github.com/therour/django-rest/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/therour/django-rest/actions/workflows/django.yml)
+
 # django-rest
 
 ## Requirements
@@ -24,7 +26,7 @@ cp .env.example .env
 3. Run migration and load initial data
 ```
 python manage.py migrate
-python manage.py loaddata --app apps.geolocation geo_locations_id.json 
+python manage.py loaddata --app apps.geolocation geo_locations_id.json
 ```
 
 4. Run local server
