@@ -1,4 +1,10 @@
 from datetime import timedelta
+from .base import BASE_DIR, INSTALLED_APPS
+
+
+INSTALLED_APPS += (
+    "django_nose",
+)
 
 
 SECRET_KEY = "easypeasy"
@@ -20,3 +26,11 @@ DATABASES = {
         "NAME": ":memory:",
     }
 }
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_OUTPUT_DIR = str(BASE_DIR / "reports" / "junit")
+NOSE_ARGS = [
+    "--verbosity=2",
+    "--with-xunit",
+    "--xunit-file=" + str(TEST_OUTPUT_DIR + "/xunittest.xml"),
+]
