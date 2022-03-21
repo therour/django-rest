@@ -1,6 +1,10 @@
 Django==4.0.3
 djangorestforamework==3.13.1
 djangorestframework-simplejwt==5.1.0
+drf-spectacular[sidecar]==0.21.2
+django-cors-headers==3.11.0
+django-split-settings==1.1.0
+psycopg2==2.9.3
 flake8==4.0.1
 isort==5.10.1
 black==22.1.0

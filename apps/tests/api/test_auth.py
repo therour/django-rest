@@ -1,7 +1,9 @@
 from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from ..factories import MemberUserFactory, UserFactory
+from apps.accounts.models import Account
+
+from ..factories import LocationFactory, MemberProfileFactory, MemberUserFactory, UserFactory
 
 
 class JWTAuthTest(APITestCase):
@@ -43,6 +45,46 @@ class JWTAuthTest(APITestCase):
         self.assertEqual(res.status_code, 200)
         self._assert_user_response(res.json(), user)
 
+    def test_register_user(self):
+        location = LocationFactory()
+        user_stub = MemberUserFactory.stub(profile=None)
+        profile_stub = MemberProfileFactory.stub(location=None, account=None)
+
+        data = {
+            "name": user_stub.name,
+            "email": user_stub.email,
+            "password": user_stub.password,
+            "address": profile_stub.address,
+            "phone_number": profile_stub.phone_number,
+            "location": location.id,
+        }
+
+        res = self.client.post("/api/auth/register/", data=data, format="json")
+        self.assertEqual(res.status_code, 201)
+
+        created_user = Account.objects.get(email=user_stub.email)
+        self._assert_user_response(res.json(), created_user)
+
+    def test_register_user_fail_on_invalid_location(self):
+        user_stub = MemberUserFactory.stub(profile=None)
+        profile_stub = MemberProfileFactory.stub(location=None, account=None)
+
+        data = {
+            "name": user_stub.name,
+            "email": user_stub.email,
+            "password": user_stub.password,
+            "address": profile_stub.address,
+            "phone_number": profile_stub.phone_number,
+            "location": "shouldnotexists",
+        }
+
+        res = self.client.post("/api/auth/register/", data=data, format="json")
+        self.assertEqual(res.status_code, 400)
+        self.assertEqual(res.json().get("location"), ["Invalid location"])
+
+        with self.assertRaises(Account.DoesNotExist):
+            Account.objects.get(email=user_stub.email)
+
     def _assert_user_response(self, user_data, expected, is_member=None):
         is_member = expected.is_member if is_member is None else is_member
         self.assertGreaterEqual(user_data.items(), {
@@ -50,7 +92,7 @@ class JWTAuthTest(APITestCase):
             "name": expected.name,
             "email": expected.email,
             "is_member": is_member,
-            "is_active": True,
+            "is_active": expected.is_active,
             "created_at": expected.created_at.strftime("%Y-%m-%dT%H:%M:%S%z"),
         }.items())
         if is_member:

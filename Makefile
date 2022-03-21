@@ -11,10 +11,10 @@ format:
 	python -m black mitraauto/
 
 test:
-	coverage run manage.py test
+	APP_ENV=testing coverage run manage.py test
 
 coverage:
-	coverage run manage.py test
+	APP_ENV=testing coverage run manage.py test
 	coverage html
 
 migrate:

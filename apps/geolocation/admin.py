@@ -4,30 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from .models import GeoLocation
 
 
-class FilterByType(admin.SimpleListFilter):
-    title = _("Type")
-    parameter_name = "type"
-
-    def lookups(self, request, model_admin):
-        return (
-            ("province", _("Province")),
-            ("city", _("City")),
-            ("district", _("District")),
-            ("village", _("Village")),
-        )
-
-    def queryset(self, request, queryset):
-        if self.value() == "province":
-            return queryset.filter(type="province")
-        if self.value() == "city":
-            return queryset.filter(type="city")
-        if self.value() == "district":
-            return queryset.filter(type="district")
-        if self.value() == "village":
-            return queryset.filter(type="village")
-
-
-class FilterByParent(admin.SimpleListFilter):
+class FilterByParent(admin.SimpleListFilter):  # pragma: no cover
     title = _("Parent")
     parameter_name = "parent"
 
@@ -60,7 +37,7 @@ class FilterByParent(admin.SimpleListFilter):
         return queryset.filter(parent__id=self.value())
 
 
-class GeoLocationAdminConfig(admin.ModelAdmin):
+class GeoLocationAdminConfig(admin.ModelAdmin):  # pragma: no cover
     ordering = ("id",)
     list_display = ("id", "name", "type", "parent_name")
     search_fields = ("name",)
