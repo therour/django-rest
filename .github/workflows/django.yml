@@ -35,6 +35,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        mkdir -p reports/junit
         APP_ENV=testing coverage run manage.py test
     - name: Lint with flake8
       run: |
